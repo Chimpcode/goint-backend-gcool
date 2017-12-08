@@ -1,6 +1,14 @@
 # The following types define the data model of the example service
 # based on which the GraphQL API is generated
 
+type Place @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    longitude: Float
+    latitude: Float
+
+    postParent: Post! @relation(name: "LocationPost")
+}
+
 type User @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
@@ -20,19 +28,15 @@ type User @model {
 
     facebookAccount: String
 
-    lastLocation: Location
 
-    followPosts: [String]
+    followPosts: [String!]
 
     # Uncomment below - you can declare relations between models like this
 
     # posts: [Post!]! @relation(name: "UserPosts")
 }
 
-type Location {
-    longitude: Float
-    latitude: Float
-}
+
 
 type Post @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
@@ -47,7 +51,7 @@ type Post @model {
     description: String
     address: String
 
-    location: [Location]
+    location: [Place!]! @relation(name: "LocationPost")
 
     stock: Int
 }
