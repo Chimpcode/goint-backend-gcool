@@ -2,22 +2,49 @@
 # based on which the GraphQL API is generated
 
 type User @model {
-  id: ID! @isUnique
-  name: String
-  dateOfBirth: DateTime
+    id: ID! @isUnique
+    createdAt: DateTime
+    group: String
 
-  # Uncomment below - you can declare relations between models like this
+    fullName: String
+    age: Integer
+    gender: String
 
-  # posts: [Post!]! @relation(name: "UserPosts")
+    loginType: String
+
+    email: String! @isUnique
+    username: String! @isUnique
+    password: String!
+
+    facebookAccount: String
+
+    lastLocation: Location @relation(name: "UserLastLocation")
+
+    followPosts: [String]
+
+    # Uncomment below - you can declare relations between models like this
+
+    # posts: [Post!]! @relation(name: "UserPosts")
 }
 
+type Location {
+    longitude: Float
+    latitude: Float
+}
 
-# Uncomment the model below as well
+type Post @model {
+    id: ID! @isUnique
+    by: String
 
-# type Post @model {
-#   id: ID! @isUnique
-#   title: String!
-#
-#   # Every relation also required a back-relation (to determine 1:1, 1:n or n:m)
-#   author: User! @relation(name: "UserPosts")
-# }
+    createdAt: DateTime
+
+    title: String!
+    type: String
+    image: String
+    description: String
+    address: String
+
+    location: [Location]
+
+    stock: Integer
+}
