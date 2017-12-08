@@ -2,8 +2,10 @@
 # based on which the GraphQL API is generated
 
 type User @model {
-    id: ID! @isUnique
-    createdAt: DateTime
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+
     group: String
 
     fullName: String
@@ -18,7 +20,7 @@ type User @model {
 
     facebookAccount: String
 
-    lastLocation: Location @relation(name: "UserLastLocation")
+    lastLocation: Location
 
     followPosts: [String]
 
@@ -33,10 +35,11 @@ type Location {
 }
 
 type Post @model {
-    id: ID! @isUnique
-    by: String
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
 
-    createdAt: DateTime
+    by: String
 
     title: String!
     type: String
