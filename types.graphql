@@ -3,10 +3,13 @@
 
 type Place @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
-    longitude: Float
-    latitude: Float
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
 
-    postParent: Post! @relation(name: "LocationPost")
+    longitude: Float!
+    latitude: Float!
+
+    postsAssigned: Post @relation(name: "PostLocations")
 }
 
 type User @model {
@@ -16,7 +19,7 @@ type User @model {
 
     group: String
 
-    fullName: String
+    fullName: String!
     age: Int
     gender: String
 
@@ -28,30 +31,63 @@ type User @model {
 
     facebookAccount: String
 
-
-    followPosts: [String!]
-
-    # Uncomment below - you can declare relations between models like this
-
-    # posts: [Post!]! @relation(name: "UserPosts")
 }
 
+type Category @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
 
+    name: String!
+    alias: String
+
+    tags: [String!]
+
+    companiesAttached: [Company!]! @relation(name: "CompanyCategories")
+}
+
+type Plan @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    type: String!
+    duration: Int!
+
+    subscribedCompanies: [Company!]! @relation(name: "CompanyPlan")
+}
+
+type Company @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    name: String!
+    categories: [Category!]! @relation(name: "CompanyCategories")
+
+    postCount: Int @defaultValue(value: 0)
+    activePlan: Plan! @relation(name: "CompanyPlan")
+
+    posts: [Post!]! @relation(name: "CompanyPosts")
+
+}
 
 type Post @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
     updatedAt: DateTime! # read-only (managed by Graphcool)
 
-    by: String
+    expireAt: DateTime
 
-    title: String!
+    by: Company! @relation(name: "CompanyPosts")
+
+    title: String! @defaultValue(value: "Untitle Post")
     type: String
     image: String
     description: String
     address: String
 
-    location: [Place!]! @relation(name: "LocationPost")
+    location: [Place!]! @relation(name: "PostLocations")
 
-    stock: Int
+    stock: Int! @defaultValue(value: 0)
 }
