@@ -1,7 +1,6 @@
 # The following types define the data model of the example service
 # based on which the GraphQL API is generated
-
-type Place @model {
+type Location @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
     updatedAt: DateTime! # read-only (managed by Graphcool)
@@ -9,7 +8,35 @@ type Place @model {
     longitude: Float!
     latitude: Float!
 
-    postsAssigned: Post @relation(name: "PostLocations")
+    address: String
+
+    storesAttached: [Store!]! @relation(name: "LocationsStore")
+}
+
+type Store @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    name: String!
+    description: String
+
+    locations: [Location]! @relation(name: "LocationsStore")
+    sectorsAttached: [Sector!]! @relation(name: "SectorStores")
+
+}
+
+type Sector @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    name: String!
+    tags: [String!]
+
+    stores: [Store!]! @relation(name: "SectorStores")
+
+    postsAssigned: [Post!]! @relation(name: "PostSectors")
 }
 
 type User @model {
@@ -87,7 +114,7 @@ type Post @model {
     description: String
     address: String
 
-    location: [Place!]! @relation(name: "PostLocations")
+    location: [Sector!]! @relation(name: "PostSectors")
 
     stock: Int! @defaultValue(value: 0)
 }
