@@ -21,7 +21,7 @@ type Store @model {
     name: String!
     description: String
 
-    locations: [Location]! @relation(name: "LocationsStore")
+    locations: [Location!]! @relation(name: "LocationsStore")
     sectorsAttached: [Sector!]! @relation(name: "SectorStores")
 
 }
