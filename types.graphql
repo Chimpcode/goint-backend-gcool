@@ -114,6 +114,8 @@ type Post @model {
     description: String
     address: String
 
+    tags: [String!]
+
     location: [Sector!]! @relation(name: "PostSectors")
 
     stock: Int! @defaultValue(value: 0)
