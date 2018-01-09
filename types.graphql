@@ -24,6 +24,7 @@ type Store @model {
     locations: [Location!]! @relation(name: "LocationsStore")
     sectorsAttached: [Sector!]! @relation(name: "SectorStores")
 
+    postsAssigned: [Post!]! @relation(name: "PostStore")
 }
 
 type Sector @model {
@@ -105,7 +106,7 @@ type Post @model {
     updatedAt: DateTime! # read-only (managed by Graphcool)
 
     expireAt: DateTime
-    isActive: Boolean @migrationValue(value: true)
+    isActive: Boolean # @migrationValue(value: true)
 
     by: Company! @relation(name: "CompanyPosts")
 
@@ -115,9 +116,10 @@ type Post @model {
     description: String
     address: String
 
-    tags: String! @migrationValue(value: "")
+    tags: String! #@migrationValue(value: "")
 
-    location: [Sector!]! @relation(name: "PostSectors")
+    locationBySectors: [Sector!]! @relation(name: "PostSectors")
+    locationByStores: [Store!]! @relation(name: "PostStore")
 
     stock: Int! @defaultValue(value: 0)
 }
