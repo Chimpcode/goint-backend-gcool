@@ -105,6 +105,7 @@ type Post @model {
     updatedAt: DateTime! # read-only (managed by Graphcool)
 
     expireAt: DateTime
+    isActive: Bool @migrationValue(value: true)
 
     by: Company! @relation(name: "CompanyPosts")
 
