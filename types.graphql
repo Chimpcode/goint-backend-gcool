@@ -99,6 +99,15 @@ type Company @model {
 
 }
 
+type Tag @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+    
+    name: String!
+}
+
+
 type Post @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
