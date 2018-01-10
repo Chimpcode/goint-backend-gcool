@@ -61,7 +61,7 @@ type User @model {
 
 }
 
-type Category @model {
+type CompanyCategory @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
     updatedAt: DateTime! # read-only (managed by Graphcool)
@@ -119,7 +119,7 @@ type Company @model {
     comercialName: String!
     optionalName: String
 
-    categories: [Category!]! @relation(name: "CompanyCategories")
+    categories: [CompanyCategory!]! @relation(name: "CompanyCategories")
 
     postCount: Int @defaultValue(value: 0)
     activePlan: Plan! @relation(name: "CompanyPlan")
@@ -132,6 +132,19 @@ type Company @model {
     staticPhone: String!
     movilPhone: String!
 
+}
+
+type KindOfPublic @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    minAge: Int! @defaultValue(value: 0)
+    maxAge: Int! @defaultValue(value: 100)
+
+    gender: String! @defaultValue(value: 'all')
+
+    postAttached: Post @relation(name: "PublicForPost")
 }
 
 type Post @model {
@@ -150,6 +163,7 @@ type Post @model {
     description: String
     address: String
 
+    targetPublic: KindOfPublic! @relation(name: "PublicForPost")
     tags: String! #@migrationValue(value: "")
 
     locationBySectors: [Sector!]! @relation(name: "PostSectors")
