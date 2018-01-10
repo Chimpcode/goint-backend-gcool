@@ -85,18 +85,52 @@ type Plan @model {
     subscribedCompanies: [Company!]! @relation(name: "CompanyPlan")
 }
 
+
+
+type LegalAddress @model {
+    id: ID! @isUnique    # read-only (managed by Graphcool)
+    createdAt: DateTime! # read-only (managed by Graphcool)
+    updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    country: String!
+    region: String!
+    province: String
+    city: String!
+
+    address: String!
+
+    zip: String
+    postalCode: String
+
+    companyAttached: Company! @relation(name: "CompanyLegalAddress")
+}
+
+
+
+
 type Company @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
     updatedAt: DateTime! # read-only (managed by Graphcool)
 
-    name: String!
+    ruc: String! @isUnique
+    socialRazon: String! @isUnique
+
+    comercialName: String!
+    optionalName: String
+
     categories: [Category!]! @relation(name: "CompanyCategories")
 
     postCount: Int @defaultValue(value: 0)
     activePlan: Plan! @relation(name: "CompanyPlan")
 
     posts: [Post!]! @relation(name: "CompanyPosts")
+
+    legalAddress: LegalAddress! @relation(name: "CompanyLegalAddress")
+
+    email: String! @isUnique
+    staticPhone: String!
+    movilPhone: String!
 
 }
 
