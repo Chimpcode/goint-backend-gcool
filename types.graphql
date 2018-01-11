@@ -128,10 +128,11 @@ type Company @model {
 
     legalAddress: LegalAddress! @relation(name: "CompanyLegalAddress")
 
-    logoImage: String! @defaultValue(value: "http://goint.com/api/v1/i/milkyway/default.png") @migrationValue(value: "http://goint.com/api/v1/i/milkyway/default.png")
+    logoImage: String! @defaultValue(value: "http://13.90.253.208:9300/api/v1/i/milkyway/default.png") # @migrationValue(value: "http://13.90.253.208:9300/api/v1/i/milkyway/default.png")
     email: String! @isUnique
     password: String!
 
+    termsAndconditions: String! @defaultValue(value: "blblblblbl...") @migrationValue(value: "blblblbl...")
     staticPhone: String!
     movilPhone: String!
 
