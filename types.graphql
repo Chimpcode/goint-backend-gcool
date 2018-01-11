@@ -146,6 +146,10 @@ type KindOfPublic @model {
 
     gender: String! @defaultValue(value: "all")
 
+    availableDays: String! @defaultValue(value: "L,M,X,J,V,S,D")#L,M,X,J,V,S,D
+    lowerHour: String! @defaultValue(value: "00:00") # HH:MM
+    upperHour: String! @defaultValue(value: "23:59") # HH:MM
+
     postAttached: Post @relation(name: "PublicForPost")
 }
 
@@ -164,6 +168,8 @@ type Post @model {
     image: String
     description: String
     address: String
+
+    shows: Int! @defaultValue(value: 0)
 
     targetPublic: KindOfPublic! @relation(name: "PublicForPost")
     tags: String! #@migrationValue(value: "")
