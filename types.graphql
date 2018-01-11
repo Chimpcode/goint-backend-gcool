@@ -142,7 +142,7 @@ type KindOfPublic @model {
     minAge: Int! @defaultValue(value: 0)
     maxAge: Int! @defaultValue(value: 100)
 
-    gender: String! @defaultValue(value: 'all')
+    gender: String! @defaultValue(value: "all")
 
     postAttached: Post @relation(name: "PublicForPost")
 }
