@@ -114,9 +114,9 @@ type Company @model {
     updatedAt: DateTime! # read-only (managed by Graphcool)
 
     ruc: String! @isUnique
-    socialRazon: String! @isUnique
+    socialReason: String! @isUnique
 
-    comercialName: String!
+    commercialName: String!
     optionalName: String
 
     categories: [CompanyCategory!]! @relation(name: "CompanyCategories")
