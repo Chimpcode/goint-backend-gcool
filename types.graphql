@@ -129,6 +129,8 @@ type Company @model {
     legalAddress: LegalAddress! @relation(name: "CompanyLegalAddress")
 
     email: String! @isUnique
+    password: String!
+
     staticPhone: String!
     movilPhone: String!
 
