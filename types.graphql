@@ -131,7 +131,7 @@ type Company @model {
     email: String! @isUnique
     password: String!
 
-    termsAndConditions: String! @migrationValue(value: "blblblbl...")
+    termsConditions: String! @migrationValue(value: "blblblbl...")
     staticPhone: String!
     movilPhone: String!
 
