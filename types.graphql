@@ -59,7 +59,7 @@ type User @model {
 
     facebookAccount: String @isUnique
 
-    myPromotions: [Post!]! @relation(value: "usersPromotions")
+    myPromotions: [Post!]! @relation(name: "usersPromotions")
 
 }
 
@@ -181,6 +181,6 @@ type Post @model {
     locationBySectors: [Sector!]! @relation(name: "PostSectors")
     locationByStores: [Store!]! @relation(name: "PostStore")
 
-    usersLiked: User@relation(value: "usersPromotions")
+    usersLiked: User @relation(name: "usersPromotions")
     stock: Int! @defaultValue(value: 0)
 }
