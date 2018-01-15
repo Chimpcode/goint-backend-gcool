@@ -57,7 +57,9 @@ type User @model {
     username: String! @isUnique
     password: String!
 
-    facebookAccount: String
+    facebookAccount: String @isUnique
+
+    myPromotions: [Post!]! @relation(value: "usersPromotions")
 
 }
 
@@ -132,7 +134,7 @@ type Company @model {
     email: String! @isUnique
     password: String!
 
-    termsAndconditions: String! @defaultValue(value: "blblblblbl...") @migrationValue(value: "blblblbl...")
+    termsAndConditions: String! @defaultValue(value: "blblblblbl...") @migrationValue(value: "blblblbl...")
     staticPhone: String!
     movilPhone: String!
 
@@ -179,5 +181,6 @@ type Post @model {
     locationBySectors: [Sector!]! @relation(name: "PostSectors")
     locationByStores: [Store!]! @relation(name: "PostStore")
 
+    usersLiked: User@relation(value: "usersPromotions")
     stock: Int! @defaultValue(value: 0)
 }
