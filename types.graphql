@@ -107,9 +107,6 @@ type LegalAddress @model {
     companyAttached: Company! @relation(name: "CompanyLegalAddress")
 }
 
-
-
-
 type Company @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
@@ -134,7 +131,7 @@ type Company @model {
     email: String! @isUnique
     password: String!
 
-    termsAndConditions: String!  @migrationValue(value: "blblblbl...")
+    termsAndConditions: String! @migrationValue(value: "blblblbl...")
     staticPhone: String!
     movilPhone: String!
 
@@ -150,7 +147,7 @@ type KindOfPublic @model {
 
     gender: String! @defaultValue(value: "all")
 
-    availableDays: String! @defaultValue(value: "L,M,X,J,V,S,D")#L,M,X,J,V,S,D
+    availableDays: String! @defaultValue(value: "L,M,X,J,V,S,D") # L,M,X,J,V,S,D
     lowerHour: String! @defaultValue(value: "00:00") # HH:MM
     upperHour: String! @defaultValue(value: "23:59") # HH:MM
 
@@ -163,7 +160,7 @@ type Post @model {
     updatedAt: DateTime! # read-only (managed by Graphcool)
 
     expireAt: DateTime
-    isActive: Boolean # @migrationValue(value: true)
+    isActive: Boolean  # @migrationValue(value: true)
 
     by: Company! @relation(name: "CompanyPosts")
 
