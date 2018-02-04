@@ -5,6 +5,8 @@ type Location @model {
     createdAt: DateTime! # read-only (managed by Graphcool)
     updatedAt: DateTime! # read-only (managed by Graphcool)
 
+    createdBy: Company! @relation(name: "CompanyLocations")
+
     longitude: Float!
     latitude: Float!
 
@@ -17,6 +19,8 @@ type Store @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
     updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    createdBy: Company! @relation(name: "CompanyStores")
 
     name: String!
     description: String
@@ -31,6 +35,8 @@ type Sector @model {
     id: ID! @isUnique    # read-only (managed by Graphcool)
     createdAt: DateTime! # read-only (managed by Graphcool)
     updatedAt: DateTime! # read-only (managed by Graphcool)
+
+    createdBy: Company! @relation(name: "CompanySectors")
 
     name: String!
     tags: [String!]
@@ -60,6 +66,8 @@ type User @model {
     facebookAccount: String @isUnique
 
     myPromotions: [Post!]! @relation(name: "PromotionsLikeByUsers")
+
+    companiesFollowing: [Company!]! @relation(name: "CompanyFollowers")
 
 }
 
@@ -123,7 +131,11 @@ type Company @model {
     postCount: Int @defaultValue(value: 0)
     activePlan: Plan! @relation(name: "CompanyPlan")
 
+    locations: [Location!]! @relation(name: "CompanyLocations")
+    stores: [Store!]! @relation(name: "CompanyStores")
+    sectors: [Sector!]! @relation(name: "CompanySectors")
     posts: [Post!]! @relation(name: "CompanyPosts")
+
 
     legalAddress: LegalAddress! @relation(name: "CompanyLegalAddress")
 
@@ -134,6 +146,9 @@ type Company @model {
     termsConditions: String! @migrationValue(value: "blblblbl...")
     staticPhone: String!
     movilPhone: String!
+
+    followers: [User!]! @relationName(name: "CompanyFollowers")
+
 
 }
 
@@ -180,4 +195,5 @@ type Post @model {
 
     usersLiked: User @relation(name: "PromotionsLikeByUsers")
     stock: Int! @defaultValue(value: 0)
+
 }
