@@ -147,7 +147,7 @@ type Company @model {
     staticPhone: String!
     movilPhone: String!
 
-    followers: [User!]! @relationName(name: "CompanyFollowers")
+    followers: [User!]! @relation(name: "CompanyFollowers")
 
 
 }
