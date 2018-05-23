@@ -1,215 +1,196 @@
 # The following types define the data model of the example service
 # based on which the GraphQL API is generated
 type Location @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	createdBy: Company! @relation(name: "CompanyLocations")
 
-    createdBy: Company! @relation(name: "CompanyLocations")
+	longitude: Float!
+	latitude: Float!
 
-    longitude: Float!
-    latitude: Float!
+	address: String
 
-    address: String
-
-    storesAttached: [Store!]! @relation(name: "LocationsStore")
+	storesAttached: [Store!]! @relation(name: "LocationsStore")
 }
 
 type Store @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	createdBy: Company! @relation(name: "CompanyStores")
 
-    createdBy: Company! @relation(name: "CompanyStores")
+	name: String!
+	description: String
 
-    name: String!
-    description: String
+	locations: [Location!]! @relation(name: "LocationsStore")
+	sectorsAttached: [Sector!]! @relation(name: "SectorStores")
 
-    locations: [Location!]! @relation(name: "LocationsStore")
-    sectorsAttached: [Sector!]! @relation(name: "SectorStores")
-
-    postsAssigned: [Post!]! @relation(name: "PostStore")
+	postsAssigned: [Post!]! @relation(name: "PostStore")
 }
 
 type Sector @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	createdBy: Company! @relation(name: "CompanySectors")
 
-    createdBy: Company! @relation(name: "CompanySectors")
+	name: String!
+	tags: [String!]
 
-    name: String!
-    tags: [String!]
+	stores: [Store!]! @relation(name: "SectorStores")
 
-    stores: [Store!]! @relation(name: "SectorStores")
-
-    postsAssigned: [Post!]! @relation(name: "PostSectors")
+	postsAssigned: [Post!]! @relation(name: "PostSectors")
 }
 
 type User @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	group: String
 
-    group: String
+	fullName: String!
+	age: Int
+	gender: String
 
-    fullName: String!
-    age: Int
-    gender: String
+	loginType: String
 
-    loginType: String
+	email: String! @isUnique
+	username: String! @isUnique
+	password: String!
 
-    email: String! @isUnique
-    username: String! @isUnique
-    password: String!
+	facebookAccount: String @isUnique
 
-    facebookAccount: String @isUnique
+	myPromotions: [Post!]! @relation(name: "PromotionsLikeByUsers")
 
-    myPromotions: [Post!]! @relation(name: "PromotionsLikeByUsers")
-
-    companiesFollowing: [Company!]! @relation(name: "CompanyFollowers")
-
+	companiesFollowing: [Company!]! @relation(name: "CompanyFollowers")
 }
 
 type CompanyCategory @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	name: String!
+	alias: String
 
-    name: String!
-    alias: String
+	tags: [String!]
 
-    tags: [String!]
-
-    companiesAttached: [Company!]! @relation(name: "CompanyCategories")
+	companiesAttached: [Company!]! @relation(name: "CompanyCategories")
 }
 
 type Plan @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	type: String!
+	duration: Int!
 
-    type: String!
-    duration: Int!
-
-    subscribedCompanies: [Company!]! @relation(name: "CompanyPlan")
+	subscribedCompanies: [Company!]! @relation(name: "CompanyPlan")
 }
 
-
-
 type LegalAddress @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	country: String!
+	region: String!
+	province: String
+	city: String!
 
-    country: String!
-    region: String!
-    province: String
-    city: String!
+	address: String!
 
-    address: String!
+	zip: String
+	postalCode: String
 
-    zip: String
-    postalCode: String
-
-    companyAttached: Company! @relation(name: "CompanyLegalAddress")
+	companyAttached: Company! @relation(name: "CompanyLegalAddress")
 }
 
 type Company @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	ruc: String! @isUnique
+	socialReason: String! @isUnique
 
-    ruc: String! @isUnique
-    socialReason: String! @isUnique
+	commercialName: String!
+	optionalName: String
 
-    commercialName: String!
-    optionalName: String
+	categories: [CompanyCategory!]! @relation(name: "CompanyCategories")
 
-    categories: [CompanyCategory!]! @relation(name: "CompanyCategories")
+	postCount: Int @defaultValue(value: 0)
+	activePlan: Plan! @relation(name: "CompanyPlan")
 
-    postCount: Int @defaultValue(value: 0)
-    activePlan: Plan! @relation(name: "CompanyPlan")
+	locations: [Location!]! @relation(name: "CompanyLocations")
+	stores: [Store!]! @relation(name: "CompanyStores")
+	sectors: [Sector!]! @relation(name: "CompanySectors")
+	posts: [Post!]! @relation(name: "CompanyPosts")
 
-    locations: [Location!]! @relation(name: "CompanyLocations")
-    stores: [Store!]! @relation(name: "CompanyStores")
-    sectors: [Sector!]! @relation(name: "CompanySectors")
-    posts: [Post!]! @relation(name: "CompanyPosts")
+	legalAddress: LegalAddress! @relation(name: "CompanyLegalAddress")
 
+	logoImage: String!
+		@defaultValue(
+			value: "http://13.90.253.208:9300/api/v1/i/milkyway/default.png"
+		) # @migrationValue(value: "http://13.90.253.208:9300/api/v1/i/milkyway/default.png")
+	email: String! @isUnique
+	password: String!
 
-    legalAddress: LegalAddress! @relation(name: "CompanyLegalAddress")
+	termsConditions: String! @migrationValue(value: "blblblbl...")
+	staticPhone: String!
+	movilPhone: String!
 
-    logoImage: String! @defaultValue(value: "http://13.90.253.208:9300/api/v1/i/milkyway/default.png") # @migrationValue(value: "http://13.90.253.208:9300/api/v1/i/milkyway/default.png")
-    email: String! @isUnique
-    password: String!
-
-    termsConditions: String! @migrationValue(value: "blblblbl...")
-    staticPhone: String!
-    movilPhone: String!
-
-    followers: [User!]! @relation(name: "CompanyFollowers")
-
-
+	followers: [User!]! @relation(name: "CompanyFollowers")
 }
 
 type KindOfPublic @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	minAge: Int! @defaultValue(value: 0)
+	maxAge: Int! @defaultValue(value: 100)
 
-    minAge: Int! @defaultValue(value: 0)
-    maxAge: Int! @defaultValue(value: 100)
+	gender: String! @defaultValue(value: "all")
 
-    gender: String! @defaultValue(value: "all")
-
-    availableDays: String! @defaultValue(value: "L,M,X,J,V,S,D") # L,M,X,J,V,S,D
-    lowerHour: String! @defaultValue(value: "00:00") # HH:MM
-    upperHour: String! @defaultValue(value: "23:59") # HH:MM
-
-    postAttached: Post @relation(name: "PublicForPost")
+	availableDays: String! @defaultValue(value: "L,M,X,J,V,S,D") # L,M,X,J,V,S,D
+	lowerHour: String! @defaultValue(value: "00:00") # HH:MM
+	upperHour: String! @defaultValue(value: "23:59") # HH:MM
+	postAttached: Post @relation(name: "PublicForPost")
 }
 
 type Post @model {
-    id: ID! @isUnique    # read-only (managed by Graphcool)
-    createdAt: DateTime! # read-only (managed by Graphcool)
-    updatedAt: DateTime! # read-only (managed by Graphcool)
+	id: ID! @isUnique # read-only (managed by Graphcool)
+	createdAt: DateTime! # read-only (managed by Graphcool)
+	updatedAt: DateTime! # read-only (managed by Graphcool)
+	expireAt: DateTime
+	isActive: Boolean # @migrationValue(value: true)
+	by: Company! @relation(name: "CompanyPosts")
 
-    expireAt: DateTime
-    isActive: Boolean  # @migrationValue(value: true)
+	title: String! @defaultValue(value: "Untitle Post")
+	type: String
+	image: String
+	description: String
+	address: String
 
-    by: Company! @relation(name: "CompanyPosts")
+	shows: Int! @defaultValue(value: 0)
 
-    title: String! @defaultValue(value: "Untitle Post")
-    type: String
-    image: String
-    description: String
-    address: String
+	targetPublic: KindOfPublic! @relation(name: "PublicForPost")
+	tags: String! #@migrationValue(value: "")
+	locationBySectors: [Sector!]! @relation(name: "PostSectors")
+	locationByStores: [Store!]! @relation(name: "PostStore")
 
-    shows: Int! @defaultValue(value: 0)
-
-    targetPublic: KindOfPublic! @relation(name: "PublicForPost")
-    tags: String! #@migrationValue(value: "")
-
-    locationBySectors: [Sector!]! @relation(name: "PostSectors")
-    locationByStores: [Store!]! @relation(name: "PostStore")
-
-    usersLiked: User @relation(name: "PromotionsLikeByUsers")
-    stock: Int! @defaultValue(value: 0)
-
+	usersLiked: [User!]! @relation(name: "PromotionsLikeByUsers")
+	stock: Int! @defaultValue(value: 0)
 }
-
 
 # added by email-password template: (please uncomment)
 # type User @model {
 #   # Required system field:
 #   id: ID! @isUnique # read-only (managed by Graphcool)
-# 
+#
 #   # Optional system fields (remove if not needed):
 #   createdAt: DateTime! # read-only (managed by Graphcool)
 #   updatedAt: DateTime! # read-only (managed by Graphcool)
-# 
+#
 #   email: String! @isUnique
 #   password: String!
 # }
-# 
-
+#
